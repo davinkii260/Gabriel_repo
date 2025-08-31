@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gabriel Tyrell M. Bonito — Artistic Portfolio</title>
+  <meta name="description" content="Animated, artistic portfolio for Gabriel Bonito — CS student & artist." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0f1020; --bg2:#14162b; --fg:#f5f7ff; --muted:#b2b6d2; --brand:#a78bfa; --brand2:#22d3ee; --accent:#f472b6;
+      --glass: rgba(255,255,255,.06); --glass-brd: rgba(255,255,255,.18);
+      --radius: 22px; --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background: radial-gradient(1200px 600px at 10% 10%, rgba(167,139,250,.18), transparent 60%),
+                       radial-gradient(1000px 600px at 90% 30%, rgba(34,211,238,.16), transparent 60%),
+                       radial-gradient(800px 600px at 30% 80%, rgba(244,114,182,.14), transparent 60%),
+                       linear-gradient(120deg, var(--bg1), var(--bg2));
+         color:var(--fg); font: 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;}
+    a{color:inherit}
+    .container{width:min(1100px, 92%); margin-inline:auto}
+
+    /* NAV */
+    .nav{position:fixed; top:16px; left:50%; transform:translateX(-50%); z-index:20; backdrop-filter: blur(10px);
+         background: var(--glass); border:1px solid var(--glass-brd); border-radius:999px; box-shadow: var(--shadow);}
+    .nav .wrap{display:flex; gap:10px; align-items:center; padding:10px 14px}
+    .brand{display:flex; align-items:center; gap:10px; padding:8px 14px; border-radius:999px; background:linear-gradient(90deg, rgba(167,139,250,.18), rgba(34,211,238,.18));}
+    .brand .dot{width:10px;height:10px;border-radius:50%; background:radial-gradient(circle at 30% 30%, #fff, #a78bfa)}
+    .nav a{padding:8px 12px; text-decoration:none; color:var(--muted); border-radius:999px}
+    .nav a:hover{background:rgba(255,255,255,.06); color:#fff}
+    .cta{background:linear-gradient(135deg, var(--brand), var(--brand2)); color:#0b0b14; font-weight:700}
+
+    /* HERO */
+    header{position:relative; overflow:hidden}
+    .hero{min-height:94vh; display:grid; place-items:center; text-align:center;}
+    .title{font-family:Playfair Display, serif; font-weight:800; font-size: clamp(40px, 7vw, 84px); line-height:1.05; letter-spacing:.2px; margin:0}
+    .subtitle{font-weight:500; color:var(--muted); margin:.6rem 0 1.2rem}
+    .roles{display:flex; justify-content:center; gap:.5rem; flex-wrap:wrap; opacity:.92}
+    .role{padding:.35rem .7rem; border-radius:999px; border:1px solid var(--glass-brd); background:rgba(255,255,255,.05)}
+    .hero-card{margin-top:22px; background: var(--glass); border:1px solid var(--glass-brd); border-radius: var(--radius);
+               box-shadow: var(--shadow); padding: 18px 18px; display:inline-flex; gap:14px; align-items:center}
+    .hero-card img{width:72px; height:72px; border-radius:50%; border:2px solid rgba(255,255,255,.35)}
+
+    /* Animated BG shapes */
+    .blob, .ring{position:absolute; filter: blur(30px); opacity:.65; mix-blend: screen; pointer-events:none}
+    .blob{width:45vmax; height:45vmax; background: radial-gradient(circle at 30% 30%, #a78bfa, transparent 60%),
+                                      radial-gradient(circle at 70% 70%, #22d3ee, transparent 60%),
+                                      radial-gradient(circle at 50% 50%, rgba(244,114,182,.9), transparent 60%);
+          border-radius:50%; animation: blob 18s ease-in-out infinite alternate}
+    @keyframes blob{0%{transform:translate(-20%, -10%) scale(1)} 100%{transform:translate(20%, 10%) scale(1.2)}}
+    .ring{inset:auto; width:70vmax; height:70vmax; border-radius:50%;
+          background: conic-gradient(from 180deg, rgba(167,139,250,.15), rgba(34,211,238,.15), rgba(244,114,182,.15), rgba(167,139,250,.15));
+          mask: radial-gradient(circle at center, transparent 46%, black 47%); animation: spin 28s linear infinite}
+    @keyframes spin{to{transform: rotate(360deg)}}
+
+    /* Sections */
+    section{padding: 84px 0}
+    h2{font-family: Playfair Display, serif; font-size: clamp(28px, 4vw, 44px); margin:0 0 14px}
+    .muted{color:var(--muted)}
+    .grid{display:grid; gap:18px}
+    .grid-2{grid-template-columns: repeat(2, minmax(0,1fr))}
+    @media (max-width: 860px){.grid-2{grid-template-columns:1fr}}
+
+    .card{background:var(--glass); border:1px solid var(--glass-brd); border-radius: var(--radius); padding:22px; box-shadow: var(--shadow)}
+    .card:hover{transform: translateY(-4px); transition: .25s ease}
+    .badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(167,139,250,.18); border:1px solid rgba(167,139,250,.3)}
+
+    /* Reveal animation */
+    .reveal{opacity:0; transform: translateY(18px); transition: all .7s ease}
+    .reveal.show{opacity:1; transform: translateY(0)}
+
+    /* Footer */
+    footer{padding:48px 0 80px; color:var(--muted); text-align:center}
+
+    /* Floating particles */
+    canvas#field{position:fixed; inset:0; z-index:-2; opacity:.35}
+
+    /* Buttons */
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:12px; font-weight:600;
+         background:linear-gradient(135deg, rgba(167,139,250,.9), rgba(34,211,238,.9)); color:#0d0e18; border:none; cursor:pointer}
+    .btn:active{transform:translateY(1px)}
+
+    /* Anchor chips */
+    .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+    .chip{padding:8px 12px; border-radius:999px; border:1px solid var(--glass-brd); background:rgba(255,255,255,.05)}
+  </style>
+</head>
+<body>
+  <!-- Floating starfield canvas -->
+  <canvas id="field"></canvas>
+
+  <!-- NAVBAR -->
+  <nav class="nav container reveal show">
+    <div class="wrap">
+      <div class="brand"><span class="dot"></span><strong>Gabriel Bonito</strong></div>
+      <a href="#about">About</a>
+      <a href="#hobbies">Hobbies</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact" class="cta">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header>
+    <div class="blob" style="top:-10vmax; left:-10vmax"></div>
+    <div class="blob" style="bottom:-15vmax; right:-15vmax; animation-delay: -6s"></div>
+    <div class="ring" style="position:absolute; top:-10vmax; left:-10vmax"></div>
+
+    <section class="hero container">
+      <div class="reveal show">
+        <h1 class="title">My Portfolio.</h1>
+        <p class="subtitle">Hi, I'm <strong>Gabriel Tyrell M. Bonito</strong> — Computer Science student & artist blending <em>painting, drawing, sketching.</p>
+        <div class="roles" id="roles">
+          <span class="role">CS Student</span>
+          <span class="role">Artist</span>
+          <span class="role">AI & Web Dev</span>
+        </div>
+        <div class="hero-card">
+          <img src="https://uploads.onecompiler.io/43g3enutd/43vb98rt3/project1.jpg" alt="Gabriel portrait" />
+          <div>
+            <div class="chips">
+              <span class="chip">JavaScript</span>
+              <span class="chip">Python</span>
+              <span class="chip">HTML/CSS</span>
+              <span class="chip">C Language</span>
+              <span class="chip">Digital Art</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:18px">
+          <a href="#contact" class="btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5v14m0 0l6-6m-6 6l-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Contact Me
+          </a>
+        </div>
+      </div>
+    </section>
+  </header>
+
+  <!-- ABOUT -->
+  <section id="about" class="container">
+    <div class="grid grid-2">
+      <div class="card reveal">
+        <h2>About Me</h2>
+        <p class="muted">I'm a Computer Science student with a passion for AI, software engineering, and design. I explore history, psychology, and philosophy to connect ideas and build things that feel both useful and beautiful.</p>
+        <ul>
+          <li>🎯 Goal: Become a Software Engineer and Businessman.</li>
+          <li>🧠 Interests: Art,Journaling, creative coding.</li>
+          <li>📚 Currently Learning: Data structures, OOP, Networking, Software Engineering.</li>
+        </ul>
+      </div>
+        </ul>
+      </div>
+      
+      
+    </div>
+  </section>
+  
+  
+
+  <!-- HOBBIES -->
+  <section id="hobbies" class="container">
+    <h2 class="reveal">Hobbies</h2>
+    <p class="muted reveal">When I'm not coding, I'm usually creating or competing.</p>
+    <div class="grid grid-2" style="margin-top:12px">
+      <div class="card reveal">
+        <h3>🎨 Art</h3>
+        <p class="muted">Digital & traditional art — painting, drawing, sketching. I love color theory and stylized portraits.</p>
+      </div>
+      <div class="card reveal">
+        <h3>♟️ Chess & Strategy</h3>
+        <p class="muted">Pattern recognition, calculation, and staying calm under pressure.</p>
+      </div>
+      <div class="card reveal">
+        <h3>🏀 Sports</h3>
+        <p class="muted">Basketball & badminton for agility and teamwork.</p>
+      </div>
+      <div class="card reveal">
+        <h3>💻 Tech Projects</h3>
+        <p class="muted">Web experiments, creative coding, and small tools that improve daily life.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS (placeholder for future) -->
+  <section id="projects" class="container">
+    <h2 class="reveal">Selected Work</h2>
+    <p class="muted reveal">A rotating gallery of pieces — art & code.</p>
+    <div class="grid grid-2" style="margin-top:12px">
+      <article class="card reveal">
+        <h3></h3>ART GALLEY</h3>
+        <p class="muted">All of my Masterpiece Art.</p>
+        <a class="btn" href="#" onclick="alert('Link your project repo here!')">View</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="container">
+    <div class="card reveal">
+      <h2>Contact</h2>
+      <p class="muted">Want to collaborate or just say hi? Reach me here:</p>
+      <ul>
+        <li>📧 <a href="mailto:bonitogabriel2005@gmail.com">bonitogabriel2005@gmail.com</a></li>
+        <li>🔗 Facebook: <a href="#" target="_blank" rel="noreferrer">Gabriel Tyrell Bonito</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="container muted">© <span id="year"></span> Gabriel Bonito.</footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); observer.unobserve(e.target); } });
+    }, {threshold:.18});
+    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+    // Starfield particles
+    const canvas = document.getElementById('field');
+    const ctx = canvas.getContext('2d');
+    let w, h, dpr, stars=[]; const COUNT=130;
+    function resize(){ dpr = Math.min(window.devicePixelRatio||1, 2); w = canvas.width = innerWidth * dpr; h = canvas.height = innerHeight * dpr; canvas.style.width = innerWidth+'px'; canvas.style.height = innerHeight+'px'; stars = Array.from({length:COUNT}, ()=>({x:Math.random()*w,y:Math.random()*h,z:Math.random()*0.6+0.4,v:(Math.random()*0.3+0.2)})); }
+    function step(){ ctx.clearRect(0,0,w,h); ctx.globalAlpha=0.9; stars.forEach(s=>{ s.x += (Math.sin(Date.now()/2000)*.1 + (mouse.x-w/2)/w*0.6) * s.v; s.y += (Math.cos(Date.now()/2200)*.1 + (mouse.y-h/2)/h*0.6) * s.v; if(s.x<0) s.x=w; if(s.x>w) s.x=0; if(s.y<0) s.y=h; if(s.y>h) s.y=0; ctx.beginPath(); ctx.arc(s.x, s.y, s.z*1.6, 0, Math.PI*2); ctx.fillStyle = `rgba(255,255,255,${0.6*s.z})`; ctx.fill();}); requestAnimationFrame(step); }
+    window.addEventListener('resize', resize); resize(); step();
+
+    // Mouse parallax
+    const mouse={x:0,y:0}; window.addEventListener('mousemove', (e)=>{ mouse.x=(e.clientX)*dpr; mouse.y=(e.clientY)*dpr; document.documentElement.style.setProperty('--mx', e.clientX+'px'); document.documentElement.style.setProperty('--my', e.clientY+'px'); });
+
+    // Optional: typewriter-like role pulsing
+    const roles = ["CS Student","Artist"];
+    let idx=0; setInterval(()=>{
+      const chips = document.getElementById('roles');
+      if(!chips) return; chips.querySelectorAll('.role').forEach((el,i)=>{ el.style.opacity = i===idx? 1 : .55; el.style.transform = i===idx? 'scale(1.04)': 'scale(1)'; });
+      idx = (idx+1) % roles.length;
+    }, 1400);
+  </script>
+</body>
+</html>
